@@ -2,16 +2,20 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
+
 public class PlayerController : MonoBehaviour
 {
-    
+   
     public float speed = 0;
     public TextMeshProUGUI countText;
+    public GameObject winTextObject;
+
 
     private Rigidbody rb;
     private int count;
     private float movementX;
     private float movementY;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,25 +23,52 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         count = 0;
 
+
         SetCountText();
+        winTextObject.SetActive(false);
     }
+
 
     void OnMove(InputValue movementValue)
     {
         Vector2 movementVector = movementValue.Get<Vector2>();
 
+
         movementX = movementVector.x;
         movementY = movementVector.y;
     }
 
+
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
+        if(count >= 12)
+        {
+            winTextObject.SetActive(true);
+        }
     }
+ 
+      private void OncollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                // Destroy the current object
+                Destroy(gameObject);
+
+
+                // Set the text to "You lose!"
+                winTextObject.gameObject.setActive(true);
+                winTextObject.text = "You lose!"
+            }
+
+
+        }
+
 
     void FixedUpdate()
     {
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
+
 
         rb.AddForce(movement * speed);
     }
@@ -49,13 +80,18 @@ public class PlayerController : MonoBehaviour
             {
             other.gameObject.SetActive(false);
             count = count + 1;
-            
+           
              SetCountText();
 
+
             }
-            
+           
         }
-            
+           
+
 
 }
+
+
+
 
