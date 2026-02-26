@@ -45,22 +45,22 @@ public class PlayerController : MonoBehaviour
         if(count >= 12)
         {
             winTextObject.SetActive(true);
+        
+            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+        
         }
     }
  
-      private void OncollisionEnter(Collision collision)
-        {
-            if (collision.gameObject.CompareTag("Enemy"))
-            {
-                // Destroy the current object
-                Destroy(gameObject);
-
-
-                // Set the text to "You lose!"
-                winTextObject.gameObject.setActive(true);
-                winTextObject.text = "You lose!"
-            }
-
+   private void OnCollisionEnter(Collision collision)
+{
+   if (collision.gameObject.CompareTag("Enemy"))
+   {
+       // Destroy the current object
+       Destroy(gameObject); 
+       // Update the winText to display "You Lose!"
+       winTextObject.gameObject.SetActive(true);
+       winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+   }
 
         }
 
