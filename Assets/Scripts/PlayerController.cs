@@ -64,6 +64,12 @@ public class PlayerController : MonoBehaviour
 
         }
 
+public void LaunchUpward(float force)
+{
+    rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z); // reset vertical speed
+    rb.AddForce(Vector3.up * force, ForceMode.Impulse);
+}
+
 
     void FixedUpdate()
     {
