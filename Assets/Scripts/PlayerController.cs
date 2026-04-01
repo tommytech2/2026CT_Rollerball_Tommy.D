@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
-        if(count >= 12)
+        if(count >= 13)
         {
             winTextObject.SetActive(true);
         
@@ -64,11 +64,12 @@ public class PlayerController : MonoBehaviour
 
         }
 
-public void LaunchUpward(float force)
+public void LaunchUpward(float force, Vector3 direction)
 {
-    rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z); // reset vertical speed
-    rb.AddForce(Vector3.up * force, ForceMode.Impulse);
+    rb.linearVelocity = Vector3.zero; // reset movement
+    rb.AddForce(direction * force, ForceMode.Impulse);
 }
+
 
 
     void FixedUpdate()
